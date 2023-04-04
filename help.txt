@@ -1,0 +1,5 @@
+Command Line Helper!
+
+You can follow the instructions:
+
+-sql             you can write SQL statements using this prefix
