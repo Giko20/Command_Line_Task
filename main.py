@@ -12,17 +12,18 @@ def get_random_string(length=8):
     result_str = ''.join(random.choice(letters) for i in range(length))
     return result_str
 
-# input the name of database
-database_name = input("Enter SqLite Database name to create connection: ")
-if database_name != '':
-    database = database_name
-else:
-    database = get_random_string()
+# function to create or connect to existing database
+def create_connect_database(database):
+    database_name = input("Enter SqLite Database name to create connection: ")
+    if database_name != '':
+        database = database_name
+    else:
+        database = get_random_string()
 
-# connect to SqLite database
-conn = sqlite3.connect(f'{database}.db')
-print('Succesfully connected!')
-c = conn.cursor()
+    # connect to SqLite database
+    conn = sqlite3.connect(f'{database}.db')
+    print('Succesfully connected!')
+    c = conn.cursor()
 
 # function to execute sql queries
 def execute_query(query):
@@ -36,9 +37,11 @@ def display_results(results):
 
 # allowing user to run commands
 while True:
-        command = input("Enter a Command (or 'quit' to exit): ")
+        command = input("Enter a Command ('quit' to exit or 'help' for usage hints ): ")
         if command == 'quit':
             break
+        elif command == 'help':
+            os.system('cat help.txt')
         else:
             # executing SQL queries
             if command.endswith(';'):
