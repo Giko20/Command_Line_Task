@@ -21,10 +21,13 @@ def create_connect_database(database):
         database = get_random_string()
 
     # connect to SqLite database
-    conn = sqlite3.connect(f'{database}.db')
-    print('Succesfully connected!')
-    c = conn.cursor()
-    return c
+    try:
+        conn = sqlite3.connect(f'{database}.db')
+        print(f'Succesfully connected!')
+        c = conn.cursor()
+        return c
+    except Exception as e:
+        print(e)
 
 # function to execute sql queries
 def execute_query(con, query):
