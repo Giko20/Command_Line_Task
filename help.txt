@@ -2,6 +2,6 @@ Command Line Helper!
 
 You can follow the instructions:
 
--sql             you can write SQL statements using this prefix
--py              yo can run the python script using 'subprocess' module
--
+-sql [ sql statement ]                you can write SQL statements using this prefix;
+-py  [ python script name ]           you can run the python script using 'subprocess' module;
+-cd  []           you can create database with this command;
