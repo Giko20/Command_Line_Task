@@ -23,16 +23,18 @@ def create_connect_database(database):
     # connect to SqLite database
     try:
         conn = sqlite3.connect(f'{database}.db')
-        print(f'Succesfully connected!')
-        c = conn.cursor()
-        return c
+        print('Succesfully connected!')
+        return database, conn
     except Exception as e:
         print(e)
 
 # function to execute sql queries
 def execute_query(con, query):
-    result = con.execute(query)
-    return result.fetchall()
+    try:
+        result = con.execute(query)
+        return result.fetchall()
+    except Exception as e:
+        print(e)
 
 # function to display results
 def display_results(results):
@@ -49,14 +51,15 @@ def runner_code():
                 subprocess.run(['cat', 'help.txt'])
             else:
                 # executing SQL queries
-                if command.endswith(';'):
+                if command.startswith('-sql'):
                     try:
+                        c = conn.cursor()
                         results = execute_query(c,command)
                         display_results(results)
                     except sqlite3.Error as e:
                         print('Error executing query:', e)
 
-                    if command.startswith('SELECT') or command.startswith('select'):
+                    if command.lower().startswith('select'):
                         file_response = input("Do you want to store query results into the file?(y/n): ")
                         if file_response == 'y':
                             filename = input("Enter a filename to save the results: ")
@@ -98,6 +101,7 @@ def runner_code():
 
 
 if __name__ == '__main__':
+    database, conn = create_connect_database(None)
     runner_code()
 # commit executed commands and close database connection
     conn.commit()
